@@ -2,7 +2,7 @@
 #include <iomanip>
 // #include <stdio.h>
 
-#define NO_SYNTH
+// #define NO_SYNTH
 // 定义一个 Stride
 struct Stride {
     size_t stride_B;
@@ -31,9 +31,14 @@ struct Tensor {
         #ifdef NO_SYNTH
             p = (T*)malloc(sizeof(T) * B * C * H * W);
         #else
-            T _p[ B * C * H * W ];
-            p = &_p[0];//_p 与 &_p[0] 效果一样
+            // T _p[ B * C * H * W ];
+            // p = _p;//_p 与 &_p[0] 效果一样
+            p = new int[ B * C * H * W ];
+            // p[0] = 1;
+            // std::cout << "p address = " << p  << "申请了" << B * C * H * W << std::endl;
         #endif
+            std::cout << "p address = " << p  << "申请了" << B * C * H * W << std::endl;
+
     }
 
     Stride stride() const {
@@ -86,9 +91,11 @@ void expand(Tensor<T>& src, Tensor<T>& dst) { // expand for broadcast,  e.g., (B
     Stride dst_str = dst.stride();
     size_t src_index;
     size_t b_i, c_i, h_i, w_i;
-    std::cout << src_str.stride_B << src_str.stride_C <<  src_str.stride_H << src_str.stride_W << std::endl;    
-    std::cout << dst_str.stride_B << dst_str.stride_C <<  dst_str.stride_H << dst_str.stride_W << std::endl;   
-    std::cout << dst.B << dst.C <<  dst.H << dst.W << std::endl;     
+    
+    // std::cout << src_str.stride_B << src_str.stride_C <<  src_str.stride_H << src_str.stride_W << std::endl;    
+    // std::cout << dst_str.stride_B << dst_str.stride_C <<  dst_str.stride_H << dst_str.stride_W << std::endl;   
+    // std::cout << dst.B << dst.C <<  dst.H << dst.W << std::endl;
+     std::cout << "dst.p[11] = " << dst.p[11] << std::endl;     
     // adjust strides of dimensions with 1 to 0 for broadcasting.
     src_str.stride_B *= (src.B == 1 ? 0 : 1);
     src_str.stride_C *= (src.C == 1 ? 0 : 1);

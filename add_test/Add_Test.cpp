@@ -1,16 +1,8 @@
 #include "Add_Test.h"
 
 int main(){
-    Tensor<int> t(1,2,3,4);
-    Stride aa = t.stride();
-    std::cout << "(" << aa.stride_B << ",";
-    std::cout << aa.stride_C << ","; 
-    std::cout << aa.stride_H << ",";
-    std::cout << aa.stride_W << ")" << std::endl;
-    std::cout << "t.size = " << t.size() << std::endl;
 
     // 生成张量A和B,并计算张量和
-
     // (B,C,H,W)
     Tensor<int> a(1,2,1,3);
     for(size_t i = 0; i < a.size();i++){
@@ -33,7 +25,7 @@ int main(){
     print(res);
     res.shape();
 
-    Tensor<int> multiply_res = multiply<int>(a,b);
-    multiply_res.print_elems();
+    // Tensor<int> multiply_res = multiply<int>(a,b);
+    // multiply_res.print_elems();
     return 0;
 }
